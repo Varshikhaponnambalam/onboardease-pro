@@ -14,16 +14,163 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      documents: {
+        Row: {
+          doc_type: Database["public"]["Enums"]["document_type"]
+          file_name: string
+          file_path: string
+          file_size: number
+          id: string
+          identity_kind:
+            | Database["public"]["Enums"]["identity_proof_kind"]
+            | null
+          mime_type: string
+          uploaded_at: string
+          user_id: string
+        }
+        Insert: {
+          doc_type: Database["public"]["Enums"]["document_type"]
+          file_name: string
+          file_path: string
+          file_size: number
+          id?: string
+          identity_kind?:
+            | Database["public"]["Enums"]["identity_proof_kind"]
+            | null
+          mime_type: string
+          uploaded_at?: string
+          user_id: string
+        }
+        Update: {
+          doc_type?: Database["public"]["Enums"]["document_type"]
+          file_name?: string
+          file_path?: string
+          file_size?: number
+          id?: string
+          identity_kind?:
+            | Database["public"]["Enums"]["identity_proof_kind"]
+            | null
+          mime_type?: string
+          uploaded_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          message: string
+          read: boolean
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind?: string
+          message: string
+          read?: boolean
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          message?: string
+          read?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          address: string | null
+          created_at: string
+          department: string | null
+          designation: string | null
+          dob: string | null
+          email: string
+          full_name: string
+          gender: Database["public"]["Enums"]["gender_type"] | null
+          hr_remarks: string | null
+          id: string
+          mobile: string | null
+          status: Database["public"]["Enums"]["onboarding_status"]
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          department?: string | null
+          designation?: string | null
+          dob?: string | null
+          email: string
+          full_name?: string
+          gender?: Database["public"]["Enums"]["gender_type"] | null
+          hr_remarks?: string | null
+          id: string
+          mobile?: string | null
+          status?: Database["public"]["Enums"]["onboarding_status"]
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          department?: string | null
+          designation?: string | null
+          dob?: string | null
+          email?: string
+          full_name?: string
+          gender?: Database["public"]["Enums"]["gender_type"] | null
+          hr_remarks?: string | null
+          id?: string
+          mobile?: string | null
+          status?: Database["public"]["Enums"]["onboarding_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "hr" | "employee"
+      document_type: "resume" | "identity_proof"
+      gender_type: "male" | "female" | "other"
+      identity_proof_kind: "aadhaar" | "pan" | "passport" | "driving_license"
+      onboarding_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +297,12 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["hr", "employee"],
+      document_type: ["resume", "identity_proof"],
+      gender_type: ["male", "female", "other"],
+      identity_proof_kind: ["aadhaar", "pan", "passport", "driving_license"],
+      onboarding_status: ["pending", "approved", "rejected"],
+    },
   },
 } as const
