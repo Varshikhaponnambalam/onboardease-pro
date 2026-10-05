@@ -22,12 +22,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       setSession(s);
       if (s?.user) {
-        setTimeout(() => fetchRole(s.user.id), 0);
+        setLoading(true);
+        setTimeout(() => fetchRole(s.user.id).finally(() => setLoading(false)), 0);
       } else {
         setRole(null);
+        setLoading(false);
       }
     });
     supabase.auth.getSession().then(({ data }) => {
