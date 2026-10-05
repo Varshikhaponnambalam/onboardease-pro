@@ -7,6 +7,10 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "OnboardPro — Automated Employee Onboarding" },
       { name: "description", content: "Register, upload documents, get HR verified — a complete onboarding workflow that gets new hires productive on day one." },
+      { property: "og:title", content: "OnboardPro — Automated Employee Onboarding" },
+      { property: "og:description", content: "Register, upload documents, get HR verified, and prepare every new hire for day one." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Landing,
@@ -30,7 +34,7 @@ function Landing() {
             <a href="#contact" className="text-sm font-medium text-muted-foreground hover:text-foreground">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
-            <Link to="/auth"><Button variant="ghost" size="sm">Sign in</Button></Link>
+            <Link to="/auth" search={{ tab: "login" }}><Button variant="ghost" size="sm">Sign in</Button></Link>
             <Link to="/auth" search={{ tab: "register" } as never}><Button size="sm">Get Started</Button></Link>
           </div>
         </div>
@@ -173,7 +177,7 @@ function Landing() {
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
               <li><a href="#features" className="hover:text-foreground">Features</a></li>
               <li><a href="#workflow" className="hover:text-foreground">Workflow</a></li>
-              <li><Link to="/auth" className="hover:text-foreground">Sign in</Link></li>
+              <li><Link to="/auth" search={{ tab: "login" }} className="hover:text-foreground">Sign in</Link></li>
             </ul>
           </div>
         </div>

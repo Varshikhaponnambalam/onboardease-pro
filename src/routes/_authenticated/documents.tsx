@@ -10,7 +10,17 @@ import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
-export const Route = createFileRoute("/_authenticated/documents")({ component: DocsPage });
+export const Route = createFileRoute("/_authenticated/documents")({
+  head: () => ({ meta: [
+    { title: "Onboarding documents — OnboardPro" },
+    { name: "description", content: "Upload and manage the documents needed to complete your employee onboarding." },
+    { property: "og:title", content: "Onboarding documents — OnboardPro" },
+    { property: "og:description", content: "Upload and manage your employee onboarding documents." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
+  component: DocsPage,
+});
 
 const MAX_SIZE = 5 * 1024 * 1024;
 const RESUME_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];

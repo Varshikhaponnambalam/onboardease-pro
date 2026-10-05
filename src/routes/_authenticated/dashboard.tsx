@@ -7,6 +7,14 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
+  head: () => ({ meta: [
+    { title: "My onboarding dashboard — OnboardPro" },
+    { name: "description", content: "Review your employee onboarding status, documents, and next steps." },
+    { property: "og:title", content: "My onboarding dashboard — OnboardPro" },
+    { property: "og:description", content: "Review your employee onboarding status and next steps." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: Dashboard,
 });
 

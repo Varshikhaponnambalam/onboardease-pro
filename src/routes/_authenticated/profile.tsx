@@ -14,7 +14,17 @@ import { Textarea } from "@/components/ui/textarea";
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Sales", "Marketing", "Human Resources", "Finance", "Operations"];
 const DESIGNATIONS = ["Intern", "Associate", "Engineer", "Senior Engineer", "Lead", "Manager", "Director", "VP"];
 
-export const Route = createFileRoute("/_authenticated/profile")({ component: ProfilePage });
+export const Route = createFileRoute("/_authenticated/profile")({
+  head: () => ({ meta: [
+    { title: "Employee profile — OnboardPro" },
+    { name: "description", content: "View and update your personal information for employee onboarding." },
+    { property: "og:title", content: "Employee profile — OnboardPro" },
+    { property: "og:description", content: "View and update your employee onboarding profile." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
+  component: ProfilePage,
+});
 
 function ProfilePage() {
   const { user } = useAuth();

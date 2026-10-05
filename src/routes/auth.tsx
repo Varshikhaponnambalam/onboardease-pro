@@ -17,7 +17,14 @@ const DESIGNATIONS = ["Intern", "Associate", "Engineer", "Senior Engineer", "Lea
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (s: Record<string, unknown>) => ({ tab: (s.tab as string) === "register" ? "register" : "login" }),
-  head: () => ({ meta: [{ title: "Sign in — OnboardPro" }, { name: "description", content: "Sign in or register to start your onboarding." }] }),
+  head: () => ({ meta: [
+    { title: "Sign in or register — OnboardPro" },
+    { name: "description", content: "Sign in to OnboardPro or create an employee account to manage your onboarding." },
+    { property: "og:title", content: "Sign in or register — OnboardPro" },
+    { property: "og:description", content: "Access your employee onboarding account or create a new one." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: AuthPage,
 });
 
@@ -45,7 +52,7 @@ function AuthPage() {
   const { user, role, loading } = useAuth();
 
   useEffect(() => {
-    if (!loading && user) {
+    if (!loading && user && role) {
       navigate({ to: role === "hr" ? "/hr" : "/dashboard" });
     }
   }, [user, role, loading, navigate]);
@@ -99,10 +106,21 @@ function LoginForm() {
     }
     setErrors({});
     setBusy(true);
-    const { error } = await supabase.auth.signInWithPassword(form);
-    setBusy(false);
-    if (error) toast.error(error.message);
-    else toast.success("Signed in");
+    try {
+      let result;
+      try {
+        result = await supabase.auth.signInWithPassword(form);
+      } catch {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        result = await supabase.auth.signInWithPassword(form);
+      }
+      if (result.error) toast.error(result.error.message);
+      else toast.success("Signed in");
+    } catch {
+      toast.error("Unable to connect right now. Check your connection and try again.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
