@@ -52,7 +52,7 @@ function AuthPage() {
   const { user, role, loading } = useAuth();
 
   useEffect(() => {
-    if (!loading && user) {
+    if (!loading && user && role) {
       navigate({ to: role === "hr" ? "/hr" : "/dashboard" });
     }
   }, [user, role, loading, navigate]);
