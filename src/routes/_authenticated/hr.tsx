@@ -11,7 +11,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
-export const Route = createFileRoute("/_authenticated/hr")({ component: HrPage });
+export const Route = createFileRoute("/_authenticated/hr")({
+  head: () => ({ meta: [
+    { title: "HR onboarding review — OnboardPro" },
+    { name: "description", content: "Review employee onboarding profiles, submitted documents, and approval status." },
+    { property: "og:title", content: "HR onboarding review — OnboardPro" },
+    { property: "og:description", content: "Review employee onboarding profiles and approval status." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
+  component: HrPage,
+});
 
 type Profile = {
   id: string; full_name: string; email: string; mobile: string | null;

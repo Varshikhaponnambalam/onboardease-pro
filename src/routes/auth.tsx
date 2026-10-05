@@ -107,8 +107,14 @@ function LoginForm() {
     setErrors({});
     setBusy(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword(form);
-      if (error) toast.error(error.message);
+      let result;
+      try {
+        result = await supabase.auth.signInWithPassword(form);
+      } catch {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        result = await supabase.auth.signInWithPassword(form);
+      }
+      if (result.error) toast.error(result.error.message);
       else toast.success("Signed in");
     } catch {
       toast.error("Unable to connect right now. Check your connection and try again.");
