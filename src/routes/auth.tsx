@@ -30,7 +30,7 @@ export const Route = createFileRoute("/auth")({
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
-  password: z.string().min(6, "Min 6 characters"),
+  password: z.string().min(1, "Password is required"),
 });
 
 const registerSchema = z.object({
@@ -42,7 +42,7 @@ const registerSchema = z.object({
   address: z.string().trim().min(5).max(300),
   department: z.string().min(1),
   designation: z.string().min(1),
-  password: z.string().min(6, "Min 6 characters").max(72),
+  password: z.string().min(1, "Password is required"),
   confirm: z.string(),
 }).refine((d) => d.password === d.confirm, { message: "Passwords don't match", path: ["confirm"] });
 
